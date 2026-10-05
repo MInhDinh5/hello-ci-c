@@ -1,23 +1,19 @@
-﻿name: C CI Pipeline
+﻿name: CI for C project
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Install GCC
-        run: sudo apt-get update && sudo apt-get install -y gcc
+      - name: Build project
+        run: gcc main.c test.c -o test_app
 
-      - name: Build program
-        run: gcc main.c -o hello
-
-      - name: Run program
-        run: ./hello
+      - name: Run unit tests
+        run: ./test_app
